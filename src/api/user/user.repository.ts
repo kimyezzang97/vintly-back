@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/User';
 import { Repository } from 'typeorm';
@@ -29,6 +29,19 @@ export class UserRepository {
 
   // 회원가입 처리
   async createUser(joinParam: JoinDto): Promise<void> {
-    await this.usersRepository.save(joinParam);
+    try {
+      await this.usersRepository.save(joinParam);
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: '회원가입 중 오류가 발생하였습니다.',
+        },
+        HttpStatus.BAD_REQUEST,
+        {
+          cause: error,
+        },
+      );
+    }
   }
 }

@@ -1,12 +1,15 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { JoinDto } from './model/user.join.dto';
-
+import { MailService } from 'src/common/mail/mail.service';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly mailService: MailService,
+  ) {}
 
   // ID 중복확인
   getChkId(id: string): Promise<number> {
@@ -40,6 +43,10 @@ export class UserService {
             ) {
               // 비밀번호 암호화
               joinParam.userPw = await bcrypt.hash(joinParam.userPw, 10);
+
+              // 메일 발송
+              const code = await this.joinEmail(joinParam.email);
+
               // 회원가입 처리
               return this.userRepository.createUser(joinParam);
             } else {
@@ -139,5 +146,13 @@ export class UserService {
         );
       } else return true;
     }
+  }
+
+  // 메일 발송
+  async joinEmail(email: string) {
+    // 암호 생성
+
+    // 메일 발송
+    await this.mailService.sendMail(joinParam.email);
   }
 }

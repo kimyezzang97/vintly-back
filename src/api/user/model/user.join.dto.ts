@@ -7,4 +7,5 @@ export class JoinDto {
   email: string;
   addr: string;
   gender: string;
+  emailCode: string;
 }

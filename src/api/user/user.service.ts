@@ -45,8 +45,11 @@ export class UserService {
               joinParam.userPw = await bcrypt.hash(joinParam.userPw, 10);
 
               // 메일 발송
-              const code = await this.joinEmail(joinParam.email);
-
+              const emailCode = await this.joinEmail(
+                joinParam.email,
+                joinParam.userId,
+              );
+              joinParam.emailCode = emailCode;
               // 회원가입 처리
               return this.userRepository.createUser(joinParam);
             } else {
@@ -149,10 +152,12 @@ export class UserService {
   }
 
   // 메일 발송
-  async joinEmail(email: string) {
+  async joinEmail(email: string, id: string) {
     // 암호 생성
-
+    const emailCode = Math.random().toString().substr(2, 6);
     // 메일 발송
-    await this.mailService.sendMail(joinParam.email);
+    await this.mailService.sendMail(email, emailCode, id);
+
+    return emailCode;
   }
 }

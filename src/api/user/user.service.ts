@@ -140,4 +140,20 @@ export class UserService {
 
     return emailCode;
   }
+
+  // 유저 mail 인증
+  async enableUser(id: string, code: string) {
+    const idValue = await this.getChkId(id);
+    if (idValue == 0) {
+      throw new HttpException('ID가 존재하지 않습니다.', HttpStatus.CONFLICT);
+    } else {
+      const user = await this.userRepository.getUserInfo(id);
+      if (code == user.emailCode) {
+        const use = 'Y';
+        await this.userRepository.enableUser(id);
+      } else {
+        throw new HttpException('error 발생', HttpStatus.BAD_REQUEST);
+      }
+    }
+  }
 }

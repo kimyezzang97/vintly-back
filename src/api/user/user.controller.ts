@@ -1,4 +1,12 @@
-import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { JoinDto } from './model/user.join.dto';
 
@@ -30,7 +38,8 @@ export class UserController {
   // 메일 인증 처리
   @HttpCode(200)
   @Get('/enable')
-  enableUser() {
-    return 'gg';
+  enableUser(@Query() enableQuery) {
+    const { id, code } = enableQuery;
+    return this.userService.enableUser(id, code);
   }
 }

@@ -1,6 +1,6 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
-@Index('user_id', ['user_id'], { unique: true })
+@Index('user_id', ['userId'], { unique: true })
 @Index('email', ['email'], { unique: true })
 @Entity('user', { schema: 'vintly' })
 export class User {
@@ -13,13 +13,13 @@ export class User {
     comment: '사용자 ID',
     length: 50,
   })
-  user_id: string;
+  userId: string;
 
   @Column('varchar', { name: 'user_pw', comment: '사용자 PW', length: 100 })
-  user_pw: string;
+  userPw: string;
 
   @Column('varchar', { name: 'user_name', comment: '사용자 이름', length: 30 })
-  user_name: string;
+  userName: string;
 
   @Column('date', { name: 'birth', comment: '생년월일' })
   birth: string;
@@ -57,7 +57,7 @@ export class User {
     length: 1,
     default: () => "'K'",
   })
-  use_yn: string;
+  useYn: string;
 
   @Column('datetime', {
     name: 'reg_date',
@@ -65,7 +65,7 @@ export class User {
     comment: '등록날짜',
     default: () => 'CURRENT_TIMESTAMP',
   })
-  reg_date: Date | null;
+  regDate: Date | null;
 
   @Column('datetime', {
     name: 'pw_date',
@@ -73,14 +73,14 @@ export class User {
     comment: '비밀번호 변경 날짜',
     default: () => 'CURRENT_TIMESTAMP',
   })
-  pw_date: Date | null;
+  pwDate: Date | null;
 
   @Column('datetime', {
     name: 'del_date',
     nullable: true,
     comment: '삭제 날짜',
   })
-  del_date: Date | null;
+  delDate: Date | null;
 
   @Column('varchar', {
     name: 'email_code',
@@ -88,7 +88,7 @@ export class User {
     comment: '이메일 인증 번호',
     length: 10,
   })
-  email_code: string | null;
+  emailCode: string | null;
 
   @Column('datetime', {
     name: 'email_ex_date',
@@ -96,7 +96,7 @@ export class User {
     comment: '이메일 만료 날짜',
     default: () => "'(current_timestamp() + interval 3 day)'",
   })
-  email_ex_date: Date | null;
+  emailExDate: Date | null;
 
   @Column('varchar', {
     name: 'phone_code',
@@ -104,5 +104,5 @@ export class User {
     comment: '휴대폰 인증 번호',
     length: 10,
   })
-  phone_code: string | null;
+  phoneCode: string | null;
 }

@@ -12,7 +12,7 @@ export class UserRepository {
 
   // id 중복 체크
   async getChkId(id: string): Promise<number> {
-    return await this.usersRepository.count({ where: { user_id: id } });
+    return await this.usersRepository.count({ where: { userId: id } });
   }
 
   // email 중복 체크
@@ -38,5 +38,48 @@ export class UserRepository {
     }
   }
 
-  // 이메일 인증
+  // 회원1명 정보 가져오기
+  async getUserInfo(paramID: string) {
+    try {
+      return await this.usersRepository.findOne({
+        where: { userId: paramID },
+      });
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: '이메일 인증 - 회원정보 가져오는 중 오류 발생',
+        },
+        HttpStatus.BAD_REQUEST,
+        {
+          cause: error,
+        },
+      );
+    }
+  }
+
+  // 이메일 인증 후 업데이트 처리
+  async enableUser(paramId: string) {
+    try {
+      return await this.usersRepository.update(
+        {
+          userId: paramId,
+        },
+        {
+          useYn: 'Y',
+        },
+      );
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: '이메일 인증 후 업데이트 중 오류 발생',
+        },
+        HttpStatus.BAD_REQUEST,
+        {
+          cause: error,
+        },
+      );
+    }
+  }
 }

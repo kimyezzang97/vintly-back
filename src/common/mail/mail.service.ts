@@ -20,9 +20,9 @@ export class MailService {
         <body>
           <h1>* 아래 버튼을 누르면 회원가입 인증이 완료됩니다! *</h1>
           <b>Hello world?${code}</b>
-          <a href="http://localhost:5001/?id=${id}&code=${code}"> 메일인증
+          <a href="http://localhost:5001/user/enable?id=${id}&code=${code}"> 메일인증
           <input type="button" class="btn" value="클릭하세용" 
-          onclick="window.open('http://localhost:5001/?id=${id}&code=${code}')" />
+          onclick="window.open('http://localhost:5001/user/enable?id=${id}&code=${code}')" />
         </body>
       </html>`,
       })

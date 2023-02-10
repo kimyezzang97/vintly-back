@@ -20,17 +20,17 @@ export class UserController {
     return this.userService.getChkEmail(email);
   }
 
-  // 닉네임 체크
-  @HttpCode(200)
-  @Get('/nickname/:nickname')
-  getChkNickname(@Param('nickname') nickname: string): Promise<number> {
-    return this.userService.getChkNickname(nickname);
-  }
-
   // 회원가입처리
   @HttpCode(201)
   @Post('/')
   createUser(@Body() joinParam: JoinDto) {
     return this.userService.createUser(joinParam);
+  }
+
+  // 메일 인증 처리
+  @HttpCode(200)
+  @Get('/enable')
+  enableUser() {
+    return 'gg';
   }
 }

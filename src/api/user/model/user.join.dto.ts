@@ -2,7 +2,6 @@ export class JoinDto {
   userId: string;
   userPw: string;
   userName: string;
-  nickname: string;
   birth: string;
   email: string;
   addr: string;

@@ -1,7 +1,6 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
-@Index('user_id', ['userId'], { unique: true })
-@Index('nickname', ['nickname'], { unique: true })
+@Index('user_id', ['user_id'], { unique: true })
 @Index('email', ['email'], { unique: true })
 @Entity('user', { schema: 'vintly' })
 export class User {
@@ -14,21 +13,13 @@ export class User {
     comment: '사용자 ID',
     length: 50,
   })
-  userId: string;
+  user_id: string;
 
   @Column('varchar', { name: 'user_pw', comment: '사용자 PW', length: 100 })
-  userPw: string;
+  user_pw: string;
 
   @Column('varchar', { name: 'user_name', comment: '사용자 이름', length: 30 })
-  userName: string;
-
-  @Column('varchar', {
-    name: 'nickname',
-    unique: true,
-    comment: '사용자 닉네임',
-    length: 50,
-  })
-  nickname: string;
+  user_name: string;
 
   @Column('date', { name: 'birth', comment: '생년월일' })
   birth: string;
@@ -64,9 +55,9 @@ export class User {
     name: 'use_yn',
     comment: '사용 유무 Y : 사용, N : 탈퇴 X : 추방, K : 이메일 인증 대기',
     length: 1,
-    default: () => "'Y'",
+    default: () => "'K'",
   })
-  useYn: string;
+  use_yn: string;
 
   @Column('datetime', {
     name: 'reg_date',
@@ -74,7 +65,7 @@ export class User {
     comment: '등록날짜',
     default: () => 'CURRENT_TIMESTAMP',
   })
-  regDate: Date | null;
+  reg_date: Date | null;
 
   @Column('datetime', {
     name: 'pw_date',
@@ -82,14 +73,14 @@ export class User {
     comment: '비밀번호 변경 날짜',
     default: () => 'CURRENT_TIMESTAMP',
   })
-  pwDate: Date | null;
+  pw_date: Date | null;
 
   @Column('datetime', {
     name: 'del_date',
     nullable: true,
     comment: '삭제 날짜',
   })
-  delDate: Date | null;
+  del_date: Date | null;
 
   @Column('varchar', {
     name: 'email_code',
@@ -97,7 +88,7 @@ export class User {
     comment: '이메일 인증 번호',
     length: 10,
   })
-  emailCode: string | null;
+  email_code: string | null;
 
   @Column('datetime', {
     name: 'email_ex_date',
@@ -105,7 +96,7 @@ export class User {
     comment: '이메일 만료 날짜',
     default: () => "'(current_timestamp() + interval 3 day)'",
   })
-  emailExDate: Date | null;
+  email_ex_date: Date | null;
 
   @Column('varchar', {
     name: 'phone_code',
@@ -113,5 +104,5 @@ export class User {
     comment: '휴대폰 인증 번호',
     length: 10,
   })
-  phoneCode: string | null;
+  phone_code: string | null;
 }

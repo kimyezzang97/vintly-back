@@ -21,19 +21,14 @@ export class UserService {
     return this.userRepository.getChkEmail(email);
   }
 
-  // 닉네임 중복확인
-  getChkNickname(nickname: string): Promise<number> {
-    return this.userRepository.getChkNickname(nickname);
-  }
-
   // 회원가입
   async createUser(joinParam: JoinDto) {
     // id 중복, 정규식 체크
     if (await this.chkIdJoin(joinParam)) {
       // pw name 체크
       if (await this.chkPwNameJoin(joinParam)) {
-        // 닉네임 생일 체크
-        if (await this.chkNickBirthJoin(joinParam)) {
+        // 생일 체크
+        if (await this.chkBirthJoin(joinParam)) {
           // 이메일 체크
           if (await this.chkEmailJoin(joinParam)) {
             if (
@@ -103,32 +98,17 @@ export class UserService {
     }
   }
 
-  // 닉네임, 생일 체크
-  async chkNickBirthJoin(joinParam: JoinDto) {
-    const nicknameFormat = /^[a-zA-Z가-힣0-9-_.]{1,15}$/;
+  // 생일 체크
+  async chkBirthJoin(joinParam: JoinDto) {
     const birthFormat =
       /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
-    if (!nicknameFormat.test(joinParam.nickname)) {
-      throw new HttpException(
-        '닉네임 양식이 맞지 않습니다.',
-        HttpStatus.BAD_REQUEST,
-      );
-    } else if (!birthFormat.test(joinParam.birth)) {
+    if (!birthFormat.test(joinParam.birth)) {
       throw new HttpException(
         '생일 양식이 맞지 않습니다.',
         HttpStatus.BAD_REQUEST,
       );
-    } else {
-      const nickname = await this.userRepository.getChkNickname(
-        joinParam.nickname,
-      );
-      if (nickname != 0) {
-        throw new HttpException(
-          '중복된 nickname이 존재합니다.',
-          HttpStatus.CONFLICT,
-        );
-      } else return true;
     }
+    return true;
   }
 
   // 이메일 중복확인, 형식 체크

@@ -12,19 +12,12 @@ export class UserRepository {
 
   // id 중복 체크
   async getChkId(id: string): Promise<number> {
-    return await this.usersRepository.count({ where: { userId: id } });
+    return await this.usersRepository.count({ where: { user_id: id } });
   }
 
   // email 중복 체크
   async getChkEmail(chkEmail: string): Promise<number> {
     return await this.usersRepository.count({ where: { email: chkEmail } });
-  }
-
-  // 닉네임 중복 체크
-  async getChkNickname(chkNickname: string): Promise<number> {
-    return await this.usersRepository.count({
-      where: { nickname: chkNickname },
-    });
   }
 
   // 회원가입 처리
@@ -44,4 +37,6 @@ export class UserRepository {
       );
     }
   }
+
+  // 이메일 인증
 }

@@ -65,7 +65,7 @@ export class MailService {
                   <tr>
                     <td style="text-align: center; padding: 15px 19px">
                       <a
-                        href="http://222.117.117.110:5001//user/enable?id=${id}&code=${code}"
+                        href="http://222.117.117.110:5001/user/enable?id=${id}&code=${code}"
                         style="
                           font-size: 16px;
                           background-color: rgb(200, 219, 190);
@@ -89,7 +89,7 @@ export class MailService {
                   </tr>
                   <tr>
                     <td>
-                      기타 문의 사항이 있으실 경우 <a href="jvintaged@gamil.com">(메일주소)</a>로
+                      기타 문의 사항이 있으실 경우 jvintaged@gamil.com(메일주소)로
                       문의주세요.
                     </td>
                   </tr>
